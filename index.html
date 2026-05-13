@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport"
+      content="width=device-width,
+               initial-scale=1.0">
+<title>Manifest Tech — Software for Indian Business</title>
+<meta name="description"
+      content="Manifest Tech builds practical software tools for Indian businesses. StockAxis, FlexClaim, Excel Image Extractor.">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --dark: #0f1117;
+    --card: #181c27;
+    --input: #1e2235;
+    --border: #2a2f45;
+    --text: #e8eaf0;
+    --text-sub: #8892a4;
+    --accent: #2563eb;
+    --accent-dim: #1d4ed8;
+    --success: #3ecf6c;
+    --warning: #e8a83b;
+    --radius: 12px;
+    --radius-sm: 8px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont,
+                 'Segoe UI', Arial, sans-serif;
+    background: var(--dark);
+    color: var(--text);
+    line-height: 1.6;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    background: rgba(15,17,23,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+    padding: 14px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+  }
+
+  .nav-logo img {
+    height: 36px;
+    object-fit: contain;
+  }
+
+  .nav-contact {
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .nav-contact a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* HERO */
+  .hero {
+    text-align: center;
+    padding: 100px 40px 80px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .hero-badge {
+    display: inline-block;
+    background: rgba(37,99,235,0.15);
+    border: 1px solid rgba(37,99,235,0.3);
+    color: var(--accent);
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-size: 48px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    letter-spacing: -1px;
+  }
+
+  .hero h1 span {
+    color: var(--accent);
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: var(--text-sub);
+    max-width: 600px;
+    margin: 0 auto 40px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--accent);
+    color: white;
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: background 0.15s;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent-dim);
+  }
+
+  .btn-outline {
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 28px;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: border-color 0.15s;
+  }
+
+  .btn-outline:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+
+  /* PRODUCTS SECTION */
+  .section {
+    padding: 80px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--text-sub);
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 48px;
+    letter-spacing: -0.5px;
+  }
+
+  /* PRODUCT CARDS */
+  .product-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 40px;
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+    transition: border-color 0.2s;
+  }
+
+  .product-card:hover {
+    border-color: rgba(37,99,235,0.4);
+  }
+
+  .product-card.reverse {
+    direction: rtl;
+  }
+
+  .product-card.reverse > * {
+    direction: ltr;
+  }
+
+  .product-logo {
+    height: 48px;
+    object-fit: contain;
+    object-position: left;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .product-logo-text {
+    font-size: 24px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+
+  .product-badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 16px;
+  }
+
+  .badge-live {
+    background: rgba(62,207,108,0.15);
+    color: var(--success);
+    border: 1px solid rgba(62,207,108,0.3);
+  }
+
+  .badge-desktop {
+    background: rgba(232,168,59,0.15);
+    color: var(--warning);
+    border: 1px solid rgba(232,168,59,0.3);
+  }
+
+  .product-desc {
+    font-size: 15px;
+    color: var(--text-sub);
+    margin-bottom: 24px;
+    line-height: 1.7;
+  }
+
+  .feature-list {
+    list-style: none;
+    margin-bottom: 28px;
+  }
+
+  .feature-list li {
+    font-size: 13.5px;
+    color: var(--text-sub);
+    padding: 5px 0;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .feature-list li::before {
+    content: "✓";
+    position: absolute;
+    left: 0;
+    color: var(--success);
+    font-weight: 700;
+  }
+
+  .product-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .product-visual {
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    text-align: center;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  .visual-icon {
+    font-size: 48px;
+  }
+
+  .visual-stat {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .visual-label {
+    font-size: 13px;
+    color: var(--text-sub);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .stat-box {
+    background: var(--dark);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+  }
+
+  .stat-box .num {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+
+  .stat-box .lbl {
+    font-size: 11px;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* CONTACT SECTION */
+  .contact-section {
+    background: var(--card);
+    border-top: 1px solid var(--border);
+    padding: 80px 40px;
+    text-align: center;
+  }
+
+  .contact-section h2 {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .contact-section p {
+    color: var(--text-sub);
+    margin-bottom: 32px;
+    font-size: 16px;
+  }
+
+  .contact-cards {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+
+  .contact-card {
+    background: var(--input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 20px 28px;
+    min-width: 200px;
+  }
+
+  .contact-card .label {
+    font-size: 11px;
+    color: var(--text-sub);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .contact-card .value {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .contact-card .value a {
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 12px;
+    color: var(--text-sub);
+  }
+
+  /* DIVIDER */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 0 40px;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav { padding: 14px 20px; }
+    .hero { padding: 60px 20px 50px; }
+    .hero h1 { font-size: 32px; }
+    .section { padding: 50px 20px; }
+    .product-card {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      padding: 24px;
+    }
+    .product-card.reverse { direction: ltr; }
+    footer {
+      flex-direction: column;
+      gap: 8px;
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <img src="assets/manifest-logo.png"
+         alt="Manifest Tech"
+         onerror="this.style.display='none';
+                  this.nextElementSibling
+                  .style.display='block'">
+    <span style="display:none;font-weight:800;
+                 font-size:18px">Manifest Tech</span>
+  </div>
+  <div class="nav-contact">
+    <a href="mailto:kartikjain@msn.com">
+      kartikjain@msn.com
+    </a>
+    &nbsp;·&nbsp;
+    <a href="tel:+919910004685">
+      +91 99100 04685
+    </a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">Manifest Tech</div>
+  <h1>Software built for<br>
+    <span>Indian businesses</span>
+  </h1>
+  <p>Practical tools that solve real problems.
+     No bloat, no subscriptions, no complexity.
+     Just software that works.</p>
+  <div class="hero-cta">
+    <a href="#products" class="btn-primary">
+      See Our Products
+    </a>
+    <a href="https://wa.me/919910004685?text=Hi, I want to know more about Manifest Tech products"
+       class="btn-outline" target="_blank">
+      WhatsApp Us
+    </a>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- PRODUCTS -->
+<section class="section" id="products">
+  <div class="section-label">Our Products</div>
+  <div class="section-title">
+    Three tools. Real problems solved.
+  </div>
+
+  <!-- STOCKAXIS -->
+  <div class="product-card">
+    <div class="product-info">
+      <img src="assets/stockaxis-logo.png"
+           alt="StockAxis"
+           class="product-logo"
+           onerror="this.style.display='none';
+                    this.nextElementSibling
+                    .style.display='block'">
+      <div class="product-logo-text"
+           style="display:none">StockAxis</div>
+      <div class="product-badge badge-live">
+        Live — Web App
+      </div>
+      <p class="product-desc">
+        Inventory intelligence for manufacturers.
+        StockAxis gives small and mid-size factories
+        full control over parts, BOMs, purchase orders,
+        production planning and vendor management —
+        all in one place, from any device.
+      </p>
+      <ul class="feature-list">
+        <li>Multi-level BOM with production planning</li>
+        <li>Live "What Can I Make Today?" calculator</li>
+        <li>Purchase orders with vendor portal</li>
+        <li>Customer returns and refurbishment pipeline</li>
+        <li>Works on mobile, tablet and desktop</li>
+        <li>English + Hindi interface</li>
+      </ul>
+      <div class="product-actions">
+        <a href="https://stockaxis-demo-ihosmyfowa-el.a.run.app/demo"
+           class="btn-primary" target="_blank">
+          Try Live Demo &rarr;
+        </a>
+        <a href="https://wa.me/919910004685?text=I want to know more about StockAxis"
+           class="btn-outline" target="_blank">
+          Get Your Own
+        </a>
+      </div>
+    </div>
+    <div class="product-visual">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="num">297</div>
+          <div class="lbl">Units makeable today</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">25+</div>
+          <div class="lbl">Parts tracked</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">6</div>
+          <div class="lbl">Vendors managed</div>
+        </div>
+        <div class="stat-box">
+          <div class="num">100%</div>
+          <div class="lbl">Browser based</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FLEXCLAIM -->
+  <div class="product-card reverse">
+    <div class="product-info">
+      <img src="assets/flexclaim-logo.png"
+           alt="FlexClaim"
+           class="product-logo"
+           onerror="this.style.display='none';
+                    this.nextElementSibling
+                    .style.display='block'">
+      <div class="product-logo-text"
+           style="display:none">FlexClaim</div>
+      <div class="product-badge badge-desktop">
+        Desktop App — Windows
+      </div>
+      <p class="product-desc">
+        Amazon sellers lose thousands every month
+        to unresolved SAFE-T claims. FlexClaim
+        automates the entire claims process —
+        finding eligible orders, filing claims,
+        and tracking reimbursements — so you
+        recover what Amazon owes you without
+        spending hours doing it manually.
+      </p>
+      <ul class="feature-list">
+        <li>Auto-detects eligible SAFE-T claims</li>
+        <li>Files claims with one click</li>
+        <li>Tracks claim status and reimbursements</li>
+        <li>Exports data to Google Sheets</li>
+        <li>Works with Amazon Seller Central India</li>
+        <li>Mobile companion app for alerts</li>
+      </ul>
+      <div class="product-actions">
+        <a href="https://wa.me/919910004685?text=I want to know more about FlexClaim"
+           class="btn-primary" target="_blank">
+          Request Demo
+        </a>
+      </div>
+    </div>
+    <div class="product-visual">
+      <div class="visual-icon">&#x26A1;</div>
+      <div class="visual-stat">&#x20B9; Auto</div>
+      <div class="visual-label">
+        Claim recovery on autopilot
+      </div>
+      <div style="margin-top:16px;
+                  font-size:12px;
+                  color:var(--text-sub);
+                  text-align:center;
+                  line-height:1.6">
+        Amazon SAFE-T claims filed automatically.<br>
+        You get paid. No manual work.
+      </div>
+    </div>
+  </div>
+
+  <!-- EXCEL IMAGE EXTRACTOR -->
+  <div class="product-card">
+    <div class="product-info">
+      <img src="assets/excel-extractor-logo.jpg"
+           alt="Excel Image Extractor"
+           class="product-logo"
+           onerror="this.style.display='none';
+                    this.nextElementSibling
+                    .style.display='block'">
+      <div class="product-logo-text"
+           style="display:none">
+        Excel Image Extractor
+      </div>
+      <div class="product-badge badge-desktop">
+        Desktop App — Windows &middot; Free
+      </div>
+      <p class="product-desc">
+        Extract images from Excel files in seconds
+        with no fuss — and without your Excel files
+        ever leaving your PC. Drop your file,
+        click extract, done. No uploads,
+        no accounts, no internet required.
+      </p>
+      <ul class="feature-list">
+        <li>100% offline — files never leave your PC</li>
+        <li>Extracts all images in one click</li>
+        <li>Supports .xlsx and .xls files</li>
+        <li>No installation of Excel needed</li>
+        <li>Free to download and use</li>
+      </ul>
+      <div class="product-actions">
+        <a href="https://drive.google.com/uc?export=download&id=1Meqzuiz4xBgqWztBlvXh0LBZPUtJ_jjv"
+           class="btn-primary"
+           id="exe-download">
+          &#x2B07; Download Free
+        </a>
+      </div>
+    </div>
+    <div class="product-visual">
+      <div class="visual-icon">&#x1F4CA;</div>
+      <div style="font-size:14px;
+                  color:var(--text-sub);
+                  text-align:center;
+                  line-height:1.8">
+        Drop your Excel file<br>
+        &#x2193;<br>
+        Images extracted instantly<br>
+        &#x2193;<br>
+        Saved to your PC<br>
+        <span style="color:var(--success);
+                     font-weight:600;
+                     font-size:13px">
+          Zero data leaves your computer
+        </span>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<hr class="divider">
+
+<!-- CONTACT -->
+<section class="contact-section">
+  <h2>Let's build something useful</h2>
+  <p>Have a business problem that needs
+     a practical software solution?<br>
+     We'd love to hear about it.</p>
+
+  <div class="contact-cards">
+    <div class="contact-card">
+      <div class="label">Contact</div>
+      <div class="value">Kartik Jain</div>
+    </div>
+    <div class="contact-card">
+      <div class="label">Email</div>
+      <div class="value">
+        <a href="mailto:kartikjain@msn.com">
+          kartikjain@msn.com
+        </a>
+      </div>
+    </div>
+    <div class="contact-card">
+      <div class="label">WhatsApp</div>
+      <div class="value">
+        <a href="https://wa.me/919910004685">
+          +91 99100 04685
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <a href="https://wa.me/919910004685?text=Hi Kartik, I want to discuss a software project"
+     class="btn-primary" target="_blank">
+    Start a Conversation on WhatsApp &rarr;
+  </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>&copy; 2026 Manifest Tech.
+    All rights reserved.</span>
+  <span>Built with care in India &#x1F1EE;&#x1F1F3;</span>
+</footer>
+
+</body>
+</html>

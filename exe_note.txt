@@ -1,0 +1,3 @@
+Upload ExcelImageExtractor.exe to Google Drive
+and replace EXE_DOWNLOAD_URL in index.html
+with the shareable Google Drive download link
