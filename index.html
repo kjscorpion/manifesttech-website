@@ -310,6 +310,7 @@ nav {
   object-position: center;
   background: var(--input);
   padding: 10px;
+  cursor: zoom-in;
 }
 .carousel-nav {
   display: flex;
@@ -400,6 +401,75 @@ nav {
   letter-spacing: 0.5px;
 }
 
+/* ── ABOUT ── */
+.about-section {
+  padding: 80px 48px;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.about-inner {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 64px;
+  align-items: start;
+}
+.about-photo-col {
+  text-align: center;
+}
+.about-photo-wrap {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin: 0 auto 16px;
+  border: 3px solid var(--border);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.about-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.about-photo-name {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.about-photo-title {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.about-heading {
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  margin-bottom: 20px;
+  letter-spacing: -0.3px;
+}
+.about-para {
+  font-size: 14.5px;
+  color: var(--text-sub);
+  line-height: 1.8;
+  margin-bottom: 16px;
+}
+.about-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+.about-tag {
+  background: var(--input);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 5px 14px;
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
 /* ── CONTACT ── */
 .contact-section {
   background: var(--card);
@@ -473,10 +543,56 @@ footer a:hover { color: var(--text-sub); }
   margin: 0 48px;
 }
 
+/* ── LIGHTBOX ── */
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lightbox-overlay.active {
+  display: flex;
+}
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 88vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 8px 48px rgba(0,0,0,0.6);
+  cursor: default;
+}
+.lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 32px;
+  cursor: pointer;
+  opacity: 0.7;
+  line-height: 1;
+}
+.lightbox-close:hover { opacity: 1; }
+.lightbox-caption {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  white-space: nowrap;
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
   nav { padding: 14px 24px; }
   .nav-links { display: none; }
+  .nav-contact { display: none; }
   .hero { padding: 64px 24px 56px; }
   .hero h1 { font-size: 36px; }
   .products-section { padding: 48px 24px 64px; }
@@ -497,6 +613,23 @@ footer a:hover { color: var(--text-sub); }
     padding: 20px 24px;
   }
   .contact-section { padding: 56px 24px; }
+  .about-section { padding: 48px 24px; }
+  .about-inner {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .about-photo-col {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    text-align: left;
+  }
+  .about-photo-wrap {
+    width: 80px;
+    height: 80px;
+    margin: 0;
+    flex-shrink: 0;
+  }
 }
 </style>
 </head>
@@ -514,6 +647,7 @@ footer a:hover { color: var(--text-sub); }
     <a href="#stockaxis">StockAxis</a>
     <a href="#flexclaim">FlexClaim</a>
     <a href="#excel-extractor">Excel Extractor</a>
+    <a href="#about">About</a>
     <a href="#contact">Contact</a>
   </div>
   <div class="nav-contact">
@@ -526,7 +660,7 @@ footer a:hover { color: var(--text-sub); }
 <!-- HERO -->
 <section class="hero">
   <div class="hero-badge">Manifest Tech</div>
-  <h1>Software built for<br><span>Indian businesses</span></h1>
+  <h1>Software built for<br><span>growing businesses</span></h1>
   <p>Practical tools that solve real problems.
      No bloat, no subscriptions, no complexity.
      Just software that works.</p>
@@ -610,12 +744,16 @@ footer a:hover { color: var(--text-sub); }
   <div class="product-block" id="flexclaim">
     <div class="product-top">
       <div class="product-top-header">
-        <img src="assets/flexclaim-logo.png"
+        <img src="assets/flexclaim-logo-new.png"
              alt="FlexClaim"
              class="product-logo"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
         <span class="product-logo-text" style="display:none">FlexClaim</span>
-        <span class="product-badge badge-desktop">Desktop App — Windows</span>
+        <span class="product-badge badge-desktop">Desktop — Windows</span>
+        <span class="product-badge badge-mobile"
+              style="background:rgba(37,99,235,0.12);color:#60a5fa;border:1px solid rgba(37,99,235,0.25);margin-left:6px">
+          + Mobile Extension
+        </span>
       </div>
       <p class="product-desc">
         Amazon sellers lose thousands every month
@@ -635,7 +773,7 @@ footer a:hover { color: var(--text-sub); }
           <li>Tracks claim status and reimbursements</li>
           <li>Exports data to Google Sheets</li>
           <li>Works with Amazon Seller Central India</li>
-          <li>Mobile companion app for alerts</li>
+          <li>Mobile extension to file quick SAFE-T claims</li>
         </ul>
         <div class="product-actions">
           <a href="https://wa.me/919910004685?text=I want to know more about FlexClaim"
@@ -645,10 +783,10 @@ footer a:hover { color: var(--text-sub); }
       <div class="product-screenshots">
         <div class="carousel" id="fc-carousel">
           <div class="carousel-track" id="fc-track">
-            <img src="assets/fc-1.jpg" alt="FlexClaim - Claims Dashboard" class="carousel-slide">
-            <img src="assets/fc-2.jpg" alt="FlexClaim - Order Analysis" class="carousel-slide">
-            <img src="assets/fc-3.jpg" alt="FlexClaim - Filing Claims" class="carousel-slide">
-            <img src="assets/fc-4.jpg" alt="FlexClaim - Reports" class="carousel-slide">
+            <img src="assets/fc-1.jpg" alt="FlexClaim - Claims Dashboard" class="carousel-slide" onclick="openLightbox(this)">
+            <img src="assets/fc-2.jpg" alt="FlexClaim - Order Analysis" class="carousel-slide" onclick="openLightbox(this)">
+            <img src="assets/fc-3.jpg" alt="FlexClaim - Filing Claims" class="carousel-slide" onclick="openLightbox(this)">
+            <img src="assets/fc-4.jpg" alt="FlexClaim - Reports" class="carousel-slide" onclick="openLightbox(this)">
           </div>
         </div>
         <div class="carousel-nav">
@@ -705,10 +843,10 @@ footer a:hover { color: var(--text-sub); }
       <div class="product-screenshots">
         <div class="carousel" id="ex-carousel">
           <div class="carousel-track" id="ex-track">
-            <img src="assets/ex-1.jpg" alt="Excel Image Extractor - Main window" class="carousel-slide">
-            <img src="assets/ex-2.jpg" alt="Excel Image Extractor - File selection" class="carousel-slide">
-            <img src="assets/ex-3.jpg" alt="Excel Image Extractor - Extraction" class="carousel-slide">
-            <img src="assets/ex-4.jpg" alt="Excel Image Extractor - Results" class="carousel-slide">
+            <img src="assets/ex-1.jpg" alt="Excel Image Extractor - Main window" class="carousel-slide" onclick="openLightbox(this)">
+            <img src="assets/ex-2.jpg" alt="Excel Image Extractor - File selection" class="carousel-slide" onclick="openLightbox(this)">
+            <img src="assets/ex-3.jpg" alt="Excel Image Extractor - Extraction" class="carousel-slide" onclick="openLightbox(this)">
+            <img src="assets/ex-4.jpg" alt="Excel Image Extractor - Results" class="carousel-slide" onclick="openLightbox(this)">
           </div>
         </div>
         <div class="carousel-nav">
@@ -728,6 +866,68 @@ footer a:hover { color: var(--text-sub); }
     </div>
   </div>
 
+</section>
+
+<hr class="section-divider">
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="about-inner">
+    <div class="about-photo-col">
+      <div class="about-photo-wrap">
+        <img src="assets/kartik-photo.jpg"
+             alt="Kartik Jain"
+             class="about-photo">
+      </div>
+      <div class="about-photo-name">Kartik Jain</div>
+      <div class="about-photo-title">Founder, Manifest Tech</div>
+    </div>
+    <div class="about-text-col">
+      <div class="section-eyebrow">About</div>
+      <h2 class="about-heading">
+        Built by someone who has lived the problem
+      </h2>
+      <p class="about-para">
+        With over 21 years in manufacturing,
+        logistics, and trading, I have sat
+        on both sides of the table — as the
+        person dealing with operational chaos
+        and as the person expected to fix it.
+        That experience taught me one thing: most
+        business problems are not complex,
+        they are just poorly organised.
+      </p>
+      <p class="about-para">
+        My background spans end-to-end
+        manufacturing operations, supply chain
+        management, and cross-functional
+        problem solving. Over two decades,
+        I developed a habit of envisioning
+        edge cases before they surface and
+        building systems that handle them
+        gracefully. That same thinking now
+        drives every product I build at
+        Manifest Tech.
+      </p>
+      <p class="about-para">
+        I build software the way a seasoned
+        operations manager would design a
+        process — lean, logical, and built
+        for real people doing real work.
+        No feature bloat. No over-engineering.
+        Just tools that solve the actual
+        problem and get out of the way.
+      </p>
+      <div class="about-tags">
+        <span class="about-tag">Manufacturing Operations</span>
+        <span class="about-tag">Supply Chain</span>
+        <span class="about-tag">Process Design</span>
+        <span class="about-tag">Logistics</span>
+        <span class="about-tag">Trading</span>
+        <span class="about-tag">Software Development</span>
+      </div>
+    </div>
+  </div>
 </section>
 
 <hr class="section-divider">
@@ -765,15 +965,38 @@ footer a:hover { color: var(--text-sub); }
   <span>Built with care in India 🇮🇳</span>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <img class="lightbox-img" id="lightbox-img" src="" alt="">
+  <div class="lightbox-caption">Click anywhere to close</div>
+</div>
+
 <!-- CAROUSEL SCRIPT -->
 <script>
 const state = {};
+
+function openLightbox(img) {
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e && e.target.classList.contains('lightbox-img')) return;
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+});
 
 function initCarousel(id, total) {
   state[id] = { cur: 0, total, paused: false };
   setInterval(() => {
     if (!state[id].paused) move(id, 1);
-  }, 4500);
+  }, 7000);
 }
 
 function move(id, dir) {
